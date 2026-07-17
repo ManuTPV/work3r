@@ -40,7 +40,15 @@
   });
 
   window.addEventListener("sw-version", function (event) {
-    versionLabel.textContent = "Cache: " + event.detail.version;
+    const detail = event.detail;
+    versionLabel.textContent =
+      "Cache: " +
+      detail.version +
+      (detail.cacheAvailable === false ? " (offline unavailable)" : "");
+  });
+
+  window.addEventListener("sw-version-timeout", function () {
+    versionLabel.textContent = "Cache: no response";
   });
 
   let pendingRegistration = null;

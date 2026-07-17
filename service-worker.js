@@ -1,7 +1,14 @@
 // Bump CACHE_VERSION to simulate shipping a new "deploy" of the dashboard.
 // Everything else (install/activate/fetch/message) is generic.
-const CACHE_VERSION = "v7";
+const CACHE_VERSION = "v8";
 const CACHE_NAME = "hotel-tv-shell-" + CACHE_VERSION;
+
+// Some embedded/kiosk TV browsers restrict or wipe persistent storage
+// between guests, which makes Cache Storage calls reject. Track that so a
+// caching failure degrades to "online only" instead of silently stopping
+// install/activate from ever completing (which would leave clients.claim()
+// never called, so the page never gets a controller).
+let cacheAvailable = true;
 
 const APP_SHELL = [
   "./",
@@ -22,9 +29,15 @@ const APP_SHELL = [
 
 self.addEventListener("install", function (event) {
   event.waitUntil(
-    caches.open(CACHE_NAME).then(function (cache) {
-      return cache.addAll(APP_SHELL);
-    })
+    caches
+      .open(CACHE_NAME)
+      .then(function (cache) {
+        return cache.addAll(APP_SHELL);
+      })
+      .catch(function (err) {
+        cacheAvailable = false;
+        console.error("Service worker: cache unavailable during install", err);
+      })
   );
 });
 
@@ -43,7 +56,14 @@ self.addEventListener("activate", function (event) {
             })
         );
       })
+      .catch(function (err) {
+        cacheAvailable = false;
+        console.error("Service worker: cache cleanup failed", err);
+      })
       .then(function () {
+        // Always claim clients, even if caching is broken on this device —
+        // without this the page never gets a controller and the status bar
+        // hangs at "Cache: —" forever with no way to tell why.
         return self.clients.claim();
       })
   );
@@ -59,16 +79,21 @@ self.addEventListener("fetch", function (event) {
   }
 
   event.respondWith(
-    caches.match(request).then(function (cached) {
-      const network = fetch(request)
-        .then(function (response) {
-          return response;
-        })
-        .catch(function () {
-          return cached;
-        });
-      return cached || network;
-    })
+    caches
+      .match(request)
+      .catch(function () {
+        return undefined;
+      })
+      .then(function (cached) {
+        const network = fetch(request)
+          .then(function (response) {
+            return response;
+          })
+          .catch(function () {
+            return cached;
+          });
+        return cached || network;
+      })
   );
 });
 
@@ -77,6 +102,10 @@ self.addEventListener("message", function (event) {
   if (event.data.type === "SKIP_WAITING") {
     self.skipWaiting();
   } else if (event.data.type === "GET_VERSION") {
-    event.source.postMessage({ type: "VERSION", version: CACHE_VERSION });
+    event.source.postMessage({
+      type: "VERSION",
+      version: CACHE_VERSION,
+      cacheAvailable: cacheAvailable,
+    });
   }
 });
