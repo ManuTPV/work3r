@@ -24,7 +24,7 @@ self.addEventListener("install", function (event) {
   event.waitUntil(
     caches.open(CACHE_NAME).then(function (cache) {
       return cache.addAll(APP_SHELL);
-    }),
+    })
   );
 });
 
@@ -40,12 +40,12 @@ self.addEventListener("activate", function (event) {
             })
             .map(function (key) {
               return caches.delete(key);
-            }),
+            })
         );
       })
       .then(function () {
         return self.clients.claim();
-      }),
+      })
   );
 });
 
@@ -68,7 +68,7 @@ self.addEventListener("fetch", function (event) {
           return cached;
         });
       return cached || network;
-    }),
+    })
   );
 });
 
