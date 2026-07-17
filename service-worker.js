@@ -1,6 +1,6 @@
 // Bump CACHE_VERSION to simulate shipping a new "deploy" of the dashboard.
 // Everything else (install/activate/fetch/message) is generic.
-const CACHE_VERSION = "v9";
+const CACHE_VERSION = "v10";
 const CACHE_NAME = "hotel-tv-shell-" + CACHE_VERSION;
 
 // Some embedded/kiosk TV browsers restrict or wipe persistent storage
@@ -37,7 +37,7 @@ self.addEventListener("install", function (event) {
       .catch(function (err) {
         cacheAvailable = false;
         console.error("Service worker: cache unavailable during install", err);
-      }),
+      })
   );
 });
 
@@ -53,7 +53,7 @@ self.addEventListener("activate", function (event) {
             })
             .map(function (key) {
               return caches.delete(key);
-            }),
+            })
         );
       })
       .catch(function (err) {
@@ -65,7 +65,7 @@ self.addEventListener("activate", function (event) {
         // without this the page never gets a controller and the status bar
         // hangs at "Cache: —" forever with no way to tell why.
         return self.clients.claim();
-      }),
+      })
   );
 });
 
@@ -93,7 +93,7 @@ self.addEventListener("fetch", function (event) {
             return cached;
           });
         return cached || network;
-      }),
+      })
   );
 });
 
@@ -102,10 +102,21 @@ self.addEventListener("message", function (event) {
   if (event.data.type === "SKIP_WAITING") {
     self.skipWaiting();
   } else if (event.data.type === "GET_VERSION") {
-    event.source.postMessage({
-      type: "VERSION",
-      version: CACHE_VERSION,
-      cacheAvailable: cacheAvailable,
+    // Broadcast via clients.matchAll() rather than event.source.postMessage().
+    // event.source (ExtendableMessageEvent.source) is a rougher edge of the
+    // spec that some embedded/OEM browsers implement inconsistently — if
+    // it's ever undefined there, event.source.postMessage() throws inside
+    // the worker (silently, invisible from the page) and the reply is lost.
+    // clients.matchAll() is a foundational Clients API call with much wider
+    // support and doesn't depend on that property.
+    self.clients.matchAll().then(function (clients) {
+      clients.forEach(function (client) {
+        client.postMessage({
+          type: "VERSION",
+          version: CACHE_VERSION,
+          cacheAvailable: cacheAvailable,
+        });
+      });
     });
   }
 });
