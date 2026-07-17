@@ -1,0 +1,242 @@
+/*
+  TV signage stylesheet.
+  Fixed 1920x1080 landscape "10-foot UI" assumption — no responsive/mobile
+  breakpoints on purpose, this is a POC for an in-room hotel TV, not a website.
+*/
+
+:root {
+  --bg: #0d0f14;
+  --panel: #171a22;
+  --panel-border: #2a2f3d;
+  --text: #eef1f6;
+  --text-dim: #9aa3b2;
+  --accent: #f2a93c;
+  --accent-dim: #7a5a1f;
+  --good: #3ddc84;
+  --bad: #ff5c5c;
+  font-size: 22px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* ---------- Header / nav ---------- */
+
+#site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 2.5rem;
+  background: var(--panel);
+  border-bottom: 1px solid var(--panel-border);
+}
+
+.brand {
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.brand span {
+  color: var(--accent);
+}
+
+.main-nav {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.main-nav a {
+  color: var(--text-dim);
+  text-decoration: none;
+  font-size: 1.1rem;
+  font-weight: 600;
+  padding: 0.6rem 1.4rem;
+  border-radius: 0.6rem;
+  border: 2px solid transparent;
+}
+
+.main-nav a:hover,
+.main-nav a:focus-visible {
+  color: var(--text);
+  border-color: var(--panel-border);
+  outline: none;
+}
+
+.main-nav a.active {
+  color: var(--bg);
+  background: var(--accent);
+}
+
+/* ---------- Main content ---------- */
+
+main {
+  padding: 2.5rem;
+  overflow-y: auto;
+}
+
+main h1 {
+  margin-top: 0;
+  font-size: 2.2rem;
+}
+
+main .subtitle {
+  color: var(--text-dim);
+  font-size: 1.15rem;
+  margin-top: -0.5rem;
+  margin-bottom: 2rem;
+}
+
+.tile-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.75rem;
+}
+
+.tile {
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+
+.tile:hover,
+.tile:focus-visible {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+  outline: none;
+}
+
+.tile .icon {
+  font-size: 2.4rem;
+  line-height: 1;
+}
+
+.tile .info .number {
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.tile .info .name {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.tile .info .genre {
+  color: var(--text-dim);
+  font-size: 0.95rem;
+}
+
+.info-section {
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: 1rem;
+  padding: 1.75rem 2rem;
+  margin-bottom: 1.75rem;
+}
+
+.info-section h2 {
+  margin-top: 0;
+  color: var(--accent);
+  font-size: 1.4rem;
+}
+
+.info-section dl {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 0.5rem 1.5rem;
+  margin: 0;
+}
+
+.info-section dt {
+  color: var(--text-dim);
+}
+
+.info-section dd {
+  margin: 0;
+}
+
+/* ---------- SW / connectivity status bar ---------- */
+
+#sw-status-bar {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  padding: 0.85rem 2.5rem;
+  background: var(--panel);
+  border-top: 1px solid var(--panel-border);
+  font-size: 0.95rem;
+  color: var(--text-dim);
+}
+
+.status-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.status-dot {
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 50%;
+  background: var(--text-dim);
+  flex-shrink: 0;
+}
+
+.status-dot.good {
+  background: var(--good);
+}
+
+.status-dot.bad {
+  background: var(--bad);
+}
+
+#update-banner {
+  display: none;
+  margin-left: auto;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+#update-banner.visible {
+  display: flex;
+}
+
+#update-banner button {
+  background: var(--accent);
+  color: var(--bg);
+  border: none;
+  font-weight: 700;
+  font-size: 0.95rem;
+  padding: 0.5rem 1.1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+
+#update-banner button:hover,
+#update-banner button:focus-visible {
+  background: var(--accent-dim);
+  color: var(--text);
+  outline: none;
+}

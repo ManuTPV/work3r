@@ -1,0 +1,10 @@
+[
+  { "name": "Netflix", "icon": "🎞️", "color": "#e50914" },
+  { "name": "YouTube", "icon": "▶️", "color": "#ff0000" },
+  { "name": "Spotify", "icon": "🎶", "color": "#1db954" },
+  { "name": "Prime Video", "icon": "📺", "color": "#00a8e1" },
+  { "name": "Weather", "icon": "⛅", "color": "#4a90d9" },
+  { "name": "Room Service", "icon": "🛎️", "color": "#c9a24b" },
+  { "name": "Wake-up Call", "icon": "⏰", "color": "#8a6fdf" },
+  { "name": "Guest Feedback", "icon": "📝", "color": "#5f6b7a" }
+]

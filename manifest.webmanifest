@@ -1,0 +1,9 @@
+{
+  "name": "Oasis Helix Hotel Dashboard",
+  "short_name": "Oasis Hotel Dashboard",
+  "start_url": "./index.html",
+  "display": "fullscreen",
+  "orientation": "landscape",
+  "background_color": "#0d0f14",
+  "theme_color": "#0d0f14"
+}

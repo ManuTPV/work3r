@@ -1,0 +1,15 @@
+[
+  { "number": 1, "name": "Hotel Welcome", "genre": "Info", "icon": "🏨" },
+  { "number": 2, "name": "BBC World News", "genre": "News", "icon": "📰" },
+  { "number": 3, "name": "CNN International", "genre": "News", "icon": "📡" },
+  { "number": 4, "name": "Sky Sports", "genre": "Sports", "icon": "⚽" },
+  { "number": 5, "name": "Eurosport", "genre": "Sports", "icon": "🏆" },
+  { "number": 6, "name": "Cartoon Network", "genre": "Kids", "icon": "🎠" },
+  { "number": 7, "name": "Discovery Channel", "genre": "Documentary", "icon": "🌍" },
+  { "number": 8, "name": "National Geographic", "genre": "Documentary", "icon": "🐆" },
+  { "number": 9, "name": "MTV", "genre": "Music", "icon": "🎵" },
+  { "number": 10, "name": "Movie Premiere HD", "genre": "Movies", "icon": "🎬" },
+  { "number": 101, "name": "Classical Radio", "genre": "Radio", "icon": "🎻" },
+  { "number": 102, "name": "Jazz FM", "genre": "Radio", "icon": "🎷" },
+  { "number": 103, "name": "Lounge & Chill", "genre": "Radio", "icon": "🎧" }
+]
