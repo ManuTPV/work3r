@@ -22,7 +22,11 @@
 }
 
 html, body {
-  height: 100%;
+  /* Hardcoded, not 100%/100vh — the panel's embedded browser doesn't always
+     report its own viewport correctly, so we pin the canvas to the TV's
+     native resolution instead of trusting device-width detection. */
+  width: 1920px;
+  height: 1080px;
   margin: 0;
 }
 
@@ -32,7 +36,6 @@ body {
   font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
   display: grid;
   grid-template-rows: auto 1fr auto;
-  height: 100vh;
   overflow: hidden;
 }
 

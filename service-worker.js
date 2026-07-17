@@ -1,6 +1,6 @@
 // Bump CACHE_VERSION to simulate shipping a new "deploy" of the dashboard.
 // Everything else (install/activate/fetch/message) is generic.
-const CACHE_VERSION = "v5";
+const CACHE_VERSION = "v6";
 const CACHE_NAME = "hotel-tv-shell-" + CACHE_VERSION;
 
 const APP_SHELL = [
@@ -12,6 +12,7 @@ const APP_SHELL = [
   "./manifest.webmanifest",
   "./css/style.css",
   "./js/nav.js",
+  "./js/remote-nav.js",
   "./js/render-grid.js",
   "./js/register-sw.js",
   "./js/sw-status.js",
