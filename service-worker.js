@@ -1,6 +1,6 @@
 // Bump CACHE_VERSION to simulate shipping a new "deploy" of the dashboard.
 // Everything else (install/activate/fetch/message) is generic.
-const CACHE_VERSION = "v4";
+const CACHE_VERSION = "v5";
 const CACHE_NAME = "hotel-tv-shell-" + CACHE_VERSION;
 
 const APP_SHELL = [
