@@ -1,6 +1,6 @@
 // Bump CACHE_VERSION to simulate shipping a new "deploy" of the dashboard.
 // Everything else (install/activate/fetch/message) is generic.
-const CACHE_VERSION = "v10";
+const CACHE_VERSION = "v11";
 const CACHE_NAME = "hotel-tv-shell-" + CACHE_VERSION;
 
 // Some embedded/kiosk TV browsers restrict or wipe persistent storage
@@ -24,7 +24,7 @@ const APP_SHELL = [
   "./js/register-sw.js",
   "./js/sw-status.js",
   "./data/channels.json",
-  "./data/apps.json",
+  "./data/apps.json"
 ];
 
 self.addEventListener("install", function (event) {
@@ -114,7 +114,7 @@ self.addEventListener("message", function (event) {
         client.postMessage({
           type: "VERSION",
           version: CACHE_VERSION,
-          cacheAvailable: cacheAvailable,
+          cacheAvailable: cacheAvailable
         });
       });
     });
